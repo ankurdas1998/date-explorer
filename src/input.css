@@ -1,0 +1,31 @@
+@import "tailwindcss";
+
+button {
+  cursor: pointer;
+}
+
+.gradient-bg {
+  background: linear-gradient(135deg, #6b73ff 0%, #000dff 50%, #0085ff 100%);
+}
+.result-card {
+  transition: all 0.3s ease;
+}
+.result-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+.date-input:focus {
+  box-shadow: 0 0 0 3px rgba(107, 115, 255, 0.5);
+}
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}

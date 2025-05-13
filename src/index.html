@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="./output.css" rel="stylesheet" />
+    <script defer src="./script.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <title>Date Explorer | Ankur Das</title>
+  </head>
+  <body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="gradient-bg text-white shadow-lg select-none">
+      <div class="container mx-auto px-4 py-6">
+        <div class="flex justify-between items-center">
+          <div class="flex items-center space-x-2">
+            <i class="fas fa-calendar-day text-3xl"></i>
+            <h1 class="text-2xl font-bold">Date Explorer</h1>
+          </div>
+          <div>
+            <button
+              id="random-date-btn"
+              class="bg-white text-blue-600 px-4 py-2 rounded-full font-semibold hover:bg-blue-50 transition"
+            >
+              <i class="fas fa-random mr-2"></i>
+              Random Date
+            </button>
+          </div>
+        </div>
+        <div class="mt-8 text-center">
+          <h2 class="text-4xl font-bold mb-4">Discover What Happened On Any Day</h2>
+          <p class="text-xl opacity-90 max-w-2xl mx-auto">
+            Enter a date to explore historical events, birthdays and fun facts from that day in
+            history.
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8 -mt-12">
+      <!-- Date Picker -->
+      <div class="bg-white rounded-xl shadow-lg p-6 max-w-2xl mx-auto">
+        <div
+          class="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0 md:space-x-4"
+        >
+          <div class="w-full md:w-auto">
+            <label for="date-input" class="block text-sm font-medium text-gray-700 mb-1">
+              Select a Date
+            </label>
+            <input
+              type="date"
+              id="date-input"
+              class="date-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+            />
+          </div>
+          <button
+            id="explore-btn"
+            class="gradient-bg text-white px-6 py-3 rounded-lg font-semibold hover:opacity-90 transition w-full md:w-auto"
+          >
+            <i class="fas fa-search mr-2"></i>
+            Explore Date
+          </button>
+        </div>
+        <div class="mt-4 text-sm text-gray-500">
+          <p>
+            Try famous dates like July 20, 1969 (Moon landing) or December 25, 1991 (Soviet Union
+            dissolved)
+          </p>
+        </div>
+      </div>
+
+      <!-- Results Section -->
+      <div id="results" class="mt-12 hidden">
+        <div class="flex justify-between items-center mb-6">
+          <h3 class="text-2xl font-bold text-gray-800">
+            Results for
+            <span id="display-date" class="text-blue-600"></span>
+          </h3>
+          <div class="flex space-x-2">
+            <button
+              class="category-btn active bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-sm font-medium"
+              data-category="all"
+            >
+              All
+            </button>
+            <button
+              class="category-btn bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-sm font-medium"
+              data-category="events"
+            >
+              Events
+            </button>
+            <button
+              class="category-btn bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-sm font-medium"
+              data-category="birthdays"
+            >
+              Birthdays
+            </button>
+            <button
+              class="category-btn bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-sm font-medium"
+              data-category="deaths"
+            >
+              Deaths
+            </button>
+          </div>
+        </div>
+
+        <!-- Loading State -->
+        <div id="loading" class="hidden">
+          <div class="flex flex-col items-center justify-center py-12">
+            <div
+              class="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mb-4"
+            ></div>
+            <p class="text-gray-600">Gathering historical data...</p>
+          </div>
+        </div>
+
+        <!-- Actual Results -->
+        <div id="results-content" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Results will be inserted here by JavaScript -->
+        </div>
+      </div>
+
+      <!-- Empty State -->
+      <div id="empty-state" class="mt-16 text-center">
+        <div class="max-w-md mx-auto">
+          <i class="fas fa-calendar-check text-6xl text-gray-300 mb-4"></i>
+          <h3 class="text-xl font-semibold text-gray-700">Ready to Explore History?</h3>
+          <p class="text-gray-500 mt-2">
+            Select a date above to discover historical events, famous birthdays and fun facts from
+            that day.
+          </p>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-100 border-t mt-12">
+      <div class="container mx-auto px-4 py-8">
+        <div class="flex flex-col md:flex-row justify-between items-center">
+          <div class="mb-4 md:mb-0">
+            <div class="flex items-center space-x-2">
+              <i class="fas fa-calendar-day text-2xl text-blue-600"></i>
+              <span class="font-bold text-lg">Date Explorer</span>
+            </div>
+            <p class="text-gray-500 text-sm mt-1">Discover the past, one day at a time.</p>
+          </div>
+          <div class="flex space-x-4">
+            <a
+              href="https://x.com/ankurdas1998"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-gray-600 hover:text-blue-600"
+            >
+              <i class="fab fa-x-twitter"></i>
+            </a>
+            <a
+              href="https://www.linkedin.com/in/ankurdas1998"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-gray-600 hover:text-blue-600"
+            >
+              <i class="fab fa-linkedin"></i>
+            </a>
+            <a
+              href="https://github.com/ankurdas1998"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-gray-600 hover:text-blue-600"
+            >
+              <i class="fab fa-github"></i>
+            </a>
+          </div>
+        </div>
+        <div class="mt-6 pt-6 border-t border-gray-200 text-center text-sm text-gray-500">
+          <p>© 2023 Date Explorer. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,23 @@
+{
+  "name": "date-explorer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon server.js",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "Ankur Das",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@tailwindcss/cli": "^4.1.6",
+    "cheerio": "^1.0.0",
+    "express": "^5.1.0",
+    "tailwindcss": "^4.1.6"
+  },
+  "devDependencies": {
+    "dotenv": "^16.5.0"
+  }
+}
