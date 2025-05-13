@@ -50,7 +50,10 @@ randomDateBtn.addEventListener("click", function () {
 
 // API calls
 async function fetchEventData(endPoint) {
-  const res = await fetch(`/${endPoint}`, {
+  const ENV = "prod"; //! in development, change it to "DEV"
+
+  const BASE_URL = ENV !== "DEV" ? "https://date-explorer.onrender.com" : "";
+  const res = await fetch(`${BASE_URL}/${endPoint}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
