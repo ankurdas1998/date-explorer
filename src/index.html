@@ -23,10 +23,10 @@
           <div>
             <button
               id="random-date-btn"
-              class="bg-white text-blue-600 px-4 py-2 rounded-full font-semibold hover:bg-blue-50 transition"
+              class="bg-white text-blue-600 px-4 py-2 rounded-full font-semibold hover:bg-blue-50 transition sm:max-w-none sm:max-h-none sm:inline-block grid place-content-center max-w-8 max-h-8"
             >
-              <i class="fas fa-random mr-2"></i>
-              Random Date
+              <i class="fas fa-random sm:mr-2"></i>
+              <span class="hidden sm:inline-block">Random Date</span>
             </button>
           </div>
         </div>
@@ -75,17 +75,23 @@
 
       <!-- Results Section -->
       <div id="results" class="mt-12 hidden">
-        <div class="flex justify-between items-center mb-6">
-          <h3 class="text-2xl font-bold text-gray-800">
+        <div class="flex flex-col justify-between items-center mb-6">
+          <h3 class="text-2xl mb-2 font-bold text-gray-800">
             Results for
             <span id="display-date" class="text-blue-600"></span>
           </h3>
-          <div class="flex space-x-2">
+          <div class="flex space-x-2 flex-wrap justify-center">
             <button
               class="category-btn active bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-sm font-medium"
               data-category="all"
             >
               All
+            </button>
+            <button
+              class="category-btn bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-sm font-medium"
+              data-category="fun-fact"
+            >
+              Facts
             </button>
             <button
               class="category-btn bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-sm font-medium"
@@ -95,9 +101,9 @@
             </button>
             <button
               class="category-btn bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-sm font-medium"
-              data-category="birthdays"
+              data-category="births"
             >
-              Birthdays
+              Births
             </button>
             <button
               class="category-btn bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-sm font-medium"

@@ -1,7 +1,10 @@
 const cheerio = require("cheerio");
 
 const scrapeWiki = async (req, res) => {
-  const [month, day] = [4, 5];
+  const date = req.body.date;
+
+  const [y, m, day] = date.split("-");
+  const month = parseInt(m, 10);
 
   const months = [
     "",
@@ -27,61 +30,57 @@ const scrapeWiki = async (req, res) => {
     const html = await response.text();
     const $ = cheerio.load(html);
 
-    const eventsStr = $("[id=1901–present]").parent().next().text();
-    const birthsStr = $("[id=1901–present_2]").parent().next().text();
-    const deathsStr = $("[id=1901–present_3]").parent().next().text();
+    const eventsStr = $("[id=1901–present]").parent().next();
+    const birthsStr = $("[id=1901–present_2]").parent().next();
+    const deathsStr = $("[id=1901–present_3]").parent().next();
 
-    function parseString(input) {
-      const lines = input.split("\n");
+    function parseHTML(input, category) {
+      const $events = $("<ul>" + input + "</ul>");
       const result = [];
 
-      lines.forEach((line) => {
-        const index = line.indexOf("–") !== -1 ? line.indexOf("–") : line.indexOf("-");
+      $events.find("li").each(function () {
+        const $li = $(this);
 
-        const split = index !== -1 ? [line.substring(0, index), line.substring(index + 1)] : [line];
+        $li.find("sup").remove();
+        const fullText = $li.text();
 
-        const title = split[0].trim();
-        const desc =
-          split[1]
-            ?.replace(/\[\d{1,2}\]/g, "")
-            .replace(/\\/g, "")
-            .trim() || "";
+        const yearMatch = fullText.match(/\b\d{4}\b/);
+        const year = yearMatch ? yearMatch[0] : null;
 
-        result.push({ title, desc });
+        let title = "";
+        if (category !== "events") {
+          const links = $li.find("a");
+          title = links.last().attr("title") || "";
+        } else {
+          title = $li.find("a").eq(1).attr("title") || "";
+        }
+
+        const desc = fullText
+          .replace(/^\s*\d{4}\s*[-–]\s*/i, "") // removes leading year + dash
+          .trim();
+
+        result.push({ year, title, desc, category });
+      });
+
+      result.sort((a, b) => {
+        // Convert year to number, fallback to 0 if invalid
+        const yearA = parseInt(a.year, 10) || 0;
+        const yearB = parseInt(b.year, 10) || 0;
+        return yearB - yearA;
       });
 
       return result;
     }
 
-    const events = parseString(eventsStr),
-      births = parseString(birthsStr),
-      deaths = parseString(deathsStr);
+    const events = parseHTML(eventsStr, "events"),
+      births = parseHTML(birthsStr, "births"),
+      deaths = parseHTML(deathsStr, "deaths");
 
     const data = {
       Events: events,
       Births: births,
       Deaths: deaths,
     };
-
-    const categoryMapping = {
-      Events: "events",
-      Births: "birthdays",
-      Deaths: "deaths",
-    };
-
-    for (let key in data) {
-      if (data.hasOwnProperty(key)) {
-        const items = data[key];
-
-        items.forEach((item) => {
-          item.category = categoryMapping[key];
-        });
-
-        items.sort(function (a, b) {
-          return parseInt(b.title) - parseInt(a.title);
-        });
-      }
-    }
 
     res.status(200).json(data);
   } catch (error) {

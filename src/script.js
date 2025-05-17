@@ -50,7 +50,7 @@ randomDateBtn.addEventListener("click", function () {
 
 // API calls
 async function fetchEventData(endPoint) {
-  const ENV = "prod"; //! in development, change it to "DEV"
+  const ENV = "DEV"; //! in development, change it to "DEV"
 
   const BASE_URL = ENV !== "DEV" ? "https://date-explorer.onrender.com" : "";
   const res = await fetch(`${BASE_URL}/${endPoint}`, {
@@ -103,8 +103,10 @@ async function generateResults(date) {
 
   const data = [...eventData.Events, ...eventData.Births, ...eventData.Deaths];
   const fData = factData.dateFacts;
+  const yData = factData.yearFacts;
+  const allFactData = [...fData, ...yData];
 
-  fData.forEach((item) => {
+  allFactData.forEach((item) => {
     const card = document.createElement("div");
     card.className = "result-card shadow-md";
     card.dataset.category = item.category;
@@ -116,9 +118,6 @@ async function generateResults(date) {
                   <i class="fas fa-lightbulb text-yellow-500"></i>
               </div>
               <h4 class="font-bold text-lg">Fun-Fact</h4>
-          </div>
-          <div class="text-sm mb-2 opacity-50">
-              <span class="font-semibold">Category:</span> ${item.category}
           </div>
           <p class="text-gray-700">${item.fact}</p>
       </div>
@@ -138,7 +137,7 @@ async function generateResults(date) {
         icon: '<i class="fas fa-landmark text-blue-500"></i>',
         bgColor: "bg-blue-100",
       },
-      birthdays: {
+      births: {
         icon: '<i class="fas fa-birthday-cake text-purple-500"></i>',
         bgColor: "bg-purple-100",
       },
@@ -163,7 +162,7 @@ async function generateResults(date) {
               <h4 class="font-bold text-lg">${item.title}</h4>
           </div>
           <div class="text-sm mb-2 opacity-50">
-              <span class="font-semibold">Category:</span> ${item.category}
+              <span class="font-semibold">Year:</span> ${item.year}
           </div>
           <p class="text-gray-700">${item.desc}</p>
       </div>
